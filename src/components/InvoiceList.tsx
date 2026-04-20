@@ -4,6 +4,7 @@ import StatusBadge from "./StatusBadge";
 import FilterBar from "./FilterBar";
 import type { Invoice, Status } from "../types/types";
 import { FaPlus } from "react-icons/fa";
+import emptyIllustration from "../assets/Email campaign_Flatline.svg"
 
 export default function InvoiceList({ invoices, onCreate, onView }: any) {
   const [filters, setFilters] = useState<Record<Status, boolean>>({
@@ -45,10 +46,12 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
 
       {/* Empty State */}
       {visible.length === 0 ? (
-        <div className="flex flex-col items-center justify-center text-center mt-20 gap-6">
-          <p className="text-text-muted">There is nothing here</p>
-          <p className="text-sm text-text-muted">
-            Create an invoice by clicking <strong>New Invoice</strong>
+        <div className="flex flex-col items-center justify-center text-center my-20 gap-6">
+          <img src={emptyIllustration} alt="No invoices" className="w-48 md:w-64" />
+          <p className="text-text font-bold text-2xl">There is nothing here</p>
+          <p className="text-sm text-text-secondary w-6/10">
+            Create an invoice by clicking the <strong>New</strong> button and get
+            started
           </p>
         </div>
       ) : (
