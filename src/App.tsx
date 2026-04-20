@@ -4,12 +4,22 @@ import InvoiceDetail from "./components/InvoiceDetail";
 import { invoiceData } from "./data/data";
 import type { Invoice } from "./types/types";
 import Navbar from "./components/Navbar";
+import InvoiceForm from "./components/InvoiceForm";
 
 function App() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
+  const [invoices, setInvoices] = useState<Invoice[]>(invoiceData);
 
   const handleCreate = () => {
-    console.log("create invoice");
+    setEditingInvoice(null);
+    setIsFormOpen(true);
+  };
+
+  const handleEdit = (invoice: Invoice) => {
+    setEditingInvoice(invoice);
+    setIsFormOpen(true);
   };
 
   const handleView = (invoice: Invoice) => {
@@ -20,23 +30,63 @@ function App() {
     setSelectedInvoice(null);
   };
 
+  // Save
+  const handleSave = (data: Invoice) => {
+    if (editingInvoice) {
+      // update
+      setInvoices((prev) =>
+        prev.map((inv) => (inv.id === data.id ? data : inv)),
+      );
+    } else {
+      // create
+      setInvoices((prev) => [data, ...prev]);
+    }
+
+    setIsFormOpen(false);
+    setEditingInvoice(null);
+    setSelectedInvoice(data);
+  };
+
+  // delete
+  const handleDelete = (id: string) => {
+    setInvoices((prev) => prev.filter((inv) => inv.id !== id));
+    setSelectedInvoice(null);
+  };
+
+  // mark as paid
+  const handleMarkPaid = (id: string) => {
+    setInvoices((prev) =>
+      prev.map((inv) => (inv.id === id ? { ...inv, status: "paid" } : inv)),
+    );
+  };
+
   return (
     <>
       <Navbar />
       <main>
-        {selectedInvoice ? (
+        {!isFormOpen && selectedInvoice && (
           <InvoiceDetail
             invoice={selectedInvoice}
             onBack={handleBack}
-            onEdit={() => console.log("edit")}
-            onDelete={() => console.log("delete")}
-            onMarkPaid={() => console.log("mark paid")}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onMarkPaid={handleMarkPaid}
           />
-        ) : (
+        )}
+        {!isFormOpen && !selectedInvoice && (
           <InvoiceList
-            invoices={invoiceData}
+            invoices={invoices}
             onCreate={handleCreate}
             onView={handleView}
+          />
+        )}
+
+        {isFormOpen && (
+          <InvoiceForm
+            onBack={handleBack}
+            initial={editingInvoice || undefined}
+            onSave={handleSave}
+            onCancel={() => setIsFormOpen(false)}
           />
         )}
       </main>

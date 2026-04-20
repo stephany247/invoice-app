@@ -1,8 +1,8 @@
 import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 import { fmt, fmtDate, calcTotal } from "../utils/utils";
-import { ChevronLeft } from "lucide-react";
 import type { Item } from "../types/types";
+import BackButton from "./BackButton";
 
 export default function InvoiceDetail({
   invoice,
@@ -20,12 +20,7 @@ export default function InvoiceDetail({
     <>
       <div className="p-6 md:p-10 max-w-4xl mx-auto">
         {/* Back */}
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 font-bold text-text hover:text-primary mb-6"
-        >
-          <ChevronLeft className="text-primary size-4" /> Go back
-        </button>
+        <BackButton onClick={onBack} />
 
         {/* Action bar */}
         <section className="bg-card rounded-md p-6 flex items-center justify-between gap-4 mb-6">
