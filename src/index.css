@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 *,
 *::before,
@@ -11,46 +13,102 @@
 :root {
   --purple: #7c5dfa;
   --purple-light: #9277ff;
+
   --bg-page: #f8f8fb;
   --bg-card: #ffffff;
   --bg-sidebar: #373b53;
+
   --text-primary: #0c0e16;
   --text-secondary: #888eb0;
   --text-muted: #7e88c3;
+
   --border: #dfe3fa;
+
   --input-bg: #ffffff;
   --input-border: #dfe3fa;
+
   --total-bg: #373b53;
   --total-text: #ffffff;
+
   --paid-bg: rgba(51, 214, 159, 0.06);
   --paid-dot: #33d69f;
   --paid-text: #33d69f;
+
   --pending-bg: rgba(255, 143, 0, 0.06);
   --pending-dot: #ff8f00;
   --pending-text: #ff8f00;
+
   --draft-bg: rgba(55, 59, 83, 0.06);
   --draft-dot: #373b53;
   --draft-text: #373b53;
+
   --red: #ec5757;
   --red-hover: #ff9797;
+
   --radius-sm: 4px;
   --radius: 8px;
   --radius-lg: 24px;
 }
-[data-theme="dark"] {
+
+.dark {
   --bg-page: #141625;
   --bg-card: #1e2139;
+
   --text-primary: #ffffff;
   --text-secondary: #dfe3fa;
   --text-muted: #888eb0;
+
   --border: #252945;
+
   --input-bg: #1e2139;
   --input-border: #252945;
+
   --total-bg: #0c0e16;
+
   --draft-bg: rgba(223, 227, 250, 0.06);
   --draft-dot: #dfe3fa;
   --draft-text: #dfe3fa;
 }
+
+@theme inline {
+  --color-primary: var(--purple);
+  --color-primary-light: var(--purple-light);
+
+  --color-bg: var(--bg-page);
+  --color-card: var(--bg-card);
+  --color-sidebar: var(--bg-sidebar);
+
+  --color-text: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-border: var(--border);
+
+  --color-input: var(--input-bg);
+  --color-input-border: var(--input-border);
+
+  --color-total-bg: var(--total-bg);
+  --color-total-text: var(--total-text);
+
+  --color-paid-bg: var(--paid-bg);
+  --color-paid: var(--paid-text);
+
+  --color-pending-bg: var(--pending-bg);
+  --color-pending: var(--pending-text);
+
+  --color-draft-bg: var(--draft-bg);
+  --color-draft: var(--draft-text);
+
+  --color-danger: var(--red);
+  --color-danger-hover: var(--red-hover);
+
+  --radius-sm: var(--radius-sm);
+  --radius: var(--radius);
+  --radius-lg: var(--radius-lg);
+
+  --font-sans: "League Spartan", sans-serif;
+}
+
 body {
   font-family: "League Spartan", sans-serif;
   background: var(--bg-page);
