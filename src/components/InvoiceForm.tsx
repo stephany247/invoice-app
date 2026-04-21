@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { fmt, today } from "../utils/utils";
 import type { Invoice, Status } from "../types/types";
 import BackButton from "./BackButton";
 import InputField from "./InputField";
 import { ChevronDown } from "lucide-react";
+import { FaTrash } from "react-icons/fa";
 
 type Item = {
   name: string;
@@ -92,7 +93,7 @@ export default function InvoiceForm({
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       {/* overlay */}
       <div className="absolute inset-0 bg-black/40" onClick={onCancel} />
 
@@ -255,9 +256,9 @@ export default function InvoiceForm({
             <span className="col-span-1" />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-10">
             {form.items.map((item, i) => (
-              <div key={i} className="grid grid-cols-12 gap-2 items-center">
+              <div key={i} className="grid grid-cols-12 gap-3 items-center">
                 {/* Name */}
                 <div className="col-span-12 md:col-span-5">
                   <InputField
@@ -269,41 +270,49 @@ export default function InvoiceForm({
                 </div>
 
                 {/* Qty */}
-                <input
-                  type="number"
-                  className="input col-span-4 md:col-span-2 text-center"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    setItemField(i, "quantity", Number(e.target.value))
-                  }
-                  aria-label="Quantity"
-                />
+                <div className="col-span-6 flex gap-2">
+                  <InputField
+                    id={`item-qty-${i}`}
+                    label="Quantity"
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      setItemField(i, "quantity", Number(e.target.value))
+                    }
+                  />
 
-                {/* Price */}
-                <input
-                  type="number"
-                  className="input col-span-4 md:col-span-2 text-right"
-                  value={item.price}
-                  onChange={(e) =>
-                    setItemField(i, "price", Number(e.target.value))
-                  }
-                  aria-label="Price"
-                />
+                  {/* Price */}
+                  <InputField
+                    id={`item-price-${i}`}
+                    label="Price"
+                    type="number"
+                    // compact
+                    value={item.price}
+                    onChange={(e) =>
+                      setItemField(i, "price", Number(e.target.value))
+                    }
+                  />
+                </div>
 
                 {/* Total */}
-                <p className="col-span-3 md:col-span-2 font-bold text-right">
-                  {fmt(item.quantity * item.price)}
-                </p>
+                <div className="col-span-6 md:col-span-2 flex flex-col items-start gap-1">
+                  <p className="text-sm text-text-muted font-medium">Total</p>
 
-                {/* Delete */}
-                <button
-                  type="button"
-                  onClick={() => removeItem(i)}
-                  className="col-span-1 flex justify-center text-text-muted hover:text-danger transition"
-                  aria-label={`Remove item ${i + 1}`}
-                >
-                  🗑
-                </button>
+                  <div className="flex gap-1 items-center justify-between w-full">
+                    <p className="font-bold py-2">
+                      {fmt(item.quantity * item.price)}
+                    </p>
+                    {/* Delete */}
+                    <button
+                      type="button"
+                      onClick={() => removeItem(i)}
+                      className="flex justify-center text-text-muted hover:text-danger transition"
+                      aria-label={`Remove item ${i + 1}`}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -311,37 +320,37 @@ export default function InvoiceForm({
           <button
             type="button"
             onClick={addItem}
-            className="w-full py-3 bg-border text-text font-medium rounded hover:opacity-80 transition"
+            className="w-full py-3 bg-bg text-text-muted font-bold rounded-full hover:opacity-80 transition"
           >
             + Add New Item
           </button>
         </fieldset>
-
-        {/* Footer */}
-        <div className="bg-card border-t border-border p-4 flex items-center">
-          {!initial && (
-            <button className="px-4 py-2 bg-border rounded" onClick={onCancel}>
-              Discard
-            </button>
-          )}
-
-          <div className="ml-auto flex gap-2">
-            <button
-              onClick={() => submit("draft")}
-              className="px-4 py-2 bg-border rounded"
-            >
-              Save Draft
-            </button>
-
-            <button
-              onClick={() => submit("pending")}
-              className="px-4 py-2 bg-primary text-white rounded"
-            >
-              {initial ? "Save Changes" : "Save & Send"}
-            </button>
-          </div>
-        </div>
       </div>
+      {/* Footer */}
+      <section className="flex gap-2 md:gap-3 justify-between bg-card p-4 font-bold text-nowrap">
+        {!initial && (
+          <button
+            className="px-6 py-3 rounded-full bg-bg text-text-muted"
+            onClick={onCancel}
+          >
+            Discard
+          </button>
+        )}
+
+        <button
+          onClick={() => submit("draft")}
+          className="px-4 py-2 bg-total-bg text-text-secondary rounded-full"
+        >
+          Save Draft
+        </button>
+
+        <button
+          onClick={() => submit("pending")}
+          className="px-4 py-2 bg-primary text-white rounded-full"
+        >
+          {initial ? "Save Changes" : "Save & Send"}
+        </button>
+      </section>
     </div>
   );
 }
