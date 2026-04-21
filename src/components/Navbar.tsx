@@ -1,9 +1,10 @@
-import { Moon, Sun } from "lucide-react";
+import { Dot, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import avatarImg from "../assets/avatar.png";
 import logo from "../assets/logo.svg";
 import { IoIosMoon } from "react-icons/io";
+import { FaCircle } from "react-icons/fa";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -26,25 +27,25 @@ export default function Navbar() {
       </div>
 
       {/* Right side */}
-      <div className="flex items-center h-full pr-4">
+      <div className="flex items-center h-full">
         {/* Theme button */}
         <button
           onClick={toggleTheme}
-          className="h-full px-6 flex items-center justify-center w-16 hover:opacity-80 transition"
+          className="h-full px-2 flex items-center justify-center w-16 hover:opacity-80 transition"
         >
           {theme === "light" ? (
             <IoIosMoon className="text-primary-light size-7" />
           ) : (
-            <Sun className="size-5" />
+            <FaCircle className="size-3 text-[#858BB2]" />
           )}
         </button>
 
         {/* Divider */}
-        <div className="h-full w-px bg-[#979797]" />
+        <div className="h-full w-px bg-[#494E6E]" />
 
         {/* Avatar */}
-        <button className="h-full px-6 flex items-center justify-center w-16">
-          <img src={avatarImg} alt="User" className="w-8 h-8 rounded-full" />
+        <button className="h-full px-5 flex items-center justify-center w-20">
+          <img src={avatarImg} alt="User" className="w-full h-auto rounded-full" />
         </button>
       </div>
     </nav>
