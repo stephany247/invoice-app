@@ -1,63 +1,45 @@
 import { useState } from "react";
-import InvoiceList from "./components/InvoiceList";
-import InvoiceDetail from "./components/InvoiceDetail";
-import { invoiceData } from "./data/data";
+import { useInvoiceStore } from "./store/invoiceStore";
 import type { Invoice } from "./types/types";
 import Navbar from "./components/Navbar";
+import InvoiceList from "./components/InvoiceList";
+import InvoiceDetail from "./components/InvoiceDetail";
 import InvoiceForm from "./components/InvoiceForm";
 
 function App() {
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const { invoices, deleteInvoice, markAsPaid, saveInvoice } =
+    useInvoiceStore();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
-  const [invoices, setInvoices] = useState<Invoice[]>(invoiceData);
+
+  const selectedInvoice = invoices.find((inv) => inv.id === selectedId) ?? null;
 
   const handleCreate = () => {
     setEditingInvoice(null);
     setIsFormOpen(true);
   };
-
   const handleEdit = (invoice: Invoice) => {
     setEditingInvoice(invoice);
     setIsFormOpen(true);
   };
-
   const handleView = (invoice: Invoice) => {
-    setSelectedInvoice(invoice);
+    setSelectedId(invoice.id);
   };
-
   const handleBack = () => {
-    setSelectedInvoice(null);
+    setSelectedId(null);
   };
 
-  // Save
   const handleSave = (data: Invoice) => {
-    if (editingInvoice) {
-      // update
-      setInvoices((prev) =>
-        prev.map((inv) => (inv.id === data.id ? data : inv)),
-      );
-    } else {
-      // create
-      setInvoices((prev) => [data, ...prev]);
-    }
-
+    saveInvoice(data); // handles both create and update
     setIsFormOpen(false);
     setEditingInvoice(null);
-    setSelectedInvoice(data);
+    setSelectedId(data.id);
   };
 
-  // delete
   const handleDelete = (id: string) => {
-    setInvoices((prev) => prev.filter((inv) => inv.id !== id));
-    setSelectedInvoice(null);
-  };
-
-  // mark as paid
-  const handleMarkPaid = (id: string) => {
-    setInvoices((prev) =>
-      prev.map((inv) => (inv.id === id ? { ...inv, status: "paid" } : inv)),
-    );
+    deleteInvoice(id);
+    setSelectedId(null);
   };
 
   const handleCloseForm = () => {
@@ -75,7 +57,7 @@ function App() {
             onBack={handleBack}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onMarkPaid={handleMarkPaid}
+            onMarkPaid={markAsPaid}
           />
         )}
         {!isFormOpen && !selectedInvoice && (
@@ -85,13 +67,12 @@ function App() {
             onView={handleView}
           />
         )}
-
         {isFormOpen && (
           <InvoiceForm
             onBack={handleCloseForm}
-            initial={editingInvoice || undefined}
+            initial={editingInvoice ?? undefined}
             onSave={handleSave}
-            onCancel={() => setIsFormOpen(false)}
+            onCancel={handleCloseForm}
           />
         )}
       </main>

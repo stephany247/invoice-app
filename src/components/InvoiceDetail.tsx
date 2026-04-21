@@ -13,8 +13,6 @@ export default function InvoiceDetail({
   onMarkPaid,
 }: any) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showPaidModal, setShowPaidModal] = useState(false);
-
   const total = calcTotal(invoice.items);
 
   return (
@@ -130,14 +128,12 @@ export default function InvoiceDetail({
         </section>
       </div>
       <section className="flex gap-2 md:gap-3 justify-between bg-card p-6">
-        {invoice.status !== "paid" && (
           <button
             onClick={() => onEdit(invoice)}
             className="px-6 py-3 rounded-full bg-bg text-text-muted hover:opacity-80"
           >
             Edit
           </button>
-        )}
 
         <button
           onClick={() => setShowDeleteModal(true)}
@@ -148,7 +144,7 @@ export default function InvoiceDetail({
 
         {invoice.status !== "paid" && (
           <button
-            onClick={() => setShowPaidModal(true)}
+            onClick={() => onMarkPaid(invoice.id)}
             className="px-6 py-3 rounded-full bg-primary text-white hover:bg-primary-light"
           >
             {invoice.status === "draft" ? "Send" : "Mark as Paid"}
@@ -160,7 +156,7 @@ export default function InvoiceDetail({
         open={showDeleteModal}
         title="Confirm Deletion"
         body={`Are you sure you want to delete invoice #${invoice.id}? This action cannot be undone.`}
-        onConfirm={onDelete}
+        onConfirm={() => onDelete(invoice.id)}
         onCancel={() => setShowDeleteModal(false)}
       />
     </>
