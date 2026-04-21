@@ -23,9 +23,7 @@ export default function InputField({
         <label htmlFor={id} className="text-sm text-text-muted font-medium">
           {label}
         </label>
-        {error && (
-          <span className="text-danger text-xs">{error}</span>
-        )}
+        {error && <span className="text-danger text-xs">{error}</span>}
       </div>
 
       <input
@@ -34,14 +32,12 @@ export default function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`px-4 py-2 rounded border w-full outline-none transition
+        className={`px-4 py-2 rounded-sm border w-full outline-none transition dark:bg-card
           ${
-            error
-              ? "border-danger"
-              : "border-input-border focus:border-primary"
+            error ? "border-danger" : "border-input-border focus:border-primary"
           }
         `}
-        aria-invalid={!!error}
+        aria-invalid={error ? "true" : undefined}
       />
     </div>
   );

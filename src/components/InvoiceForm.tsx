@@ -95,10 +95,10 @@ export default function InvoiceForm({
   return (
     <div className="flex flex-col">
       {/* overlay */}
-      <div className="absolute inset-0 bg-black/40" onClick={onCancel} />
+      {/* <div className="absolute inset-0 bg-black/40" onClick={onCancel} /> */}
 
       {/* drawer */}
-      <div className="ml-auto w-full max-w-xl bg-card h-full overflow-y-auto p-6 md:p-8 relative space-y-6">
+      <div className="ml-auto w-full max-w-xl bg-card dark:bg-bg h-full overflow-y-auto p-6 md:p-8 relative space-y-10">
         <BackButton onClick={onBack} />
 
         <h2 className="text-xl font-bold">
@@ -149,7 +149,7 @@ export default function InvoiceForm({
         </fieldset>
 
         {/* Bill To */}
-        <fieldset className="space-y-6 mb-6">
+        <fieldset className="space-y-6">
           <legend className="text-primary font-bold block">Bill To</legend>
 
           <div className="flex flex-col gap-4">
@@ -200,7 +200,7 @@ export default function InvoiceForm({
         </fieldset>
 
         {/* Dates */}
-        <fieldset className="space-y-6 mb-6">
+        <fieldset className="space-y-6">
           <InputField
             id="createdAt"
             label="Invoice Date"
@@ -243,7 +243,7 @@ export default function InvoiceForm({
         </fieldset>
 
         <fieldset className="space-y-6 mb-6">
-          <legend className="text-text-muted font-bold text-lg block">
+          <legend className="text-[#777F98] font-bold text-lg block">
             Item List
           </legend>
 
@@ -320,29 +320,28 @@ export default function InvoiceForm({
           <button
             type="button"
             onClick={addItem}
-            className="w-full py-3 bg-bg text-text-muted font-bold rounded-full hover:opacity-80 transition"
+            className="w-full py-3 bg-light-btn text-text-muted font-bold rounded-full hover:opacity-80 transition"
           >
             + Add New Item
           </button>
         </fieldset>
       </div>
       {/* Footer */}
-      <section className="flex gap-2 md:gap-3 justify-between bg-card p-4 font-bold text-nowrap">
+      <section className="flex gap-2 md:gap-3 justify-end bg-card p-4 font-bold text-nowrap">
+        <button
+          className="px-6 py-3 rounded-full bg-light-btn text-text-muted"
+          onClick={onCancel}
+        >
+          {initial ? "Cancel" : "Discard"}
+        </button>
         {!initial && (
           <button
-            className="px-6 py-3 rounded-full bg-bg text-text-muted"
-            onClick={onCancel}
+            onClick={() => submit("draft")}
+            className="px-4 py-2 bg-[#373B53] text-text-secondary dark:text-text-muted rounded-full"
           >
-            Discard
+            Save Draft
           </button>
         )}
-
-        <button
-          onClick={() => submit("draft")}
-          className="px-4 py-2 bg-total-bg text-text-secondary rounded-full"
-        >
-          Save Draft
-        </button>
 
         <button
           onClick={() => submit("pending")}
