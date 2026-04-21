@@ -60,6 +60,11 @@ function App() {
     );
   };
 
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+    setEditingInvoice(null);
+  };
+
   return (
     <>
       <Navbar />
@@ -83,7 +88,7 @@ function App() {
 
         {isFormOpen && (
           <InvoiceForm
-            onBack={handleBack}
+            onBack={handleCloseForm}
             initial={editingInvoice || undefined}
             onSave={handleSave}
             onCancel={() => setIsFormOpen(false)}
