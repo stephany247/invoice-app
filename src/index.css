@@ -9,7 +9,7 @@
   --bg-page: #f8f8fb;
   --bg-card: #ffffff;
   --bg-sidebar: #373b53;
-
+  --bg-light-btn: #f9fafe;
   --text-primary: #0c0e16;
   --text-secondary: #888eb0;
   --text-muted: #7e88c3;
@@ -45,10 +45,12 @@
 .dark {
   --bg-page: #141625;
   --bg-card: #1e2139;
+  --bg-light-btn: #252945;
+
 
   --text-primary: #ffffff;
-  --text-secondary: #dfe3fa;
-  --text-muted: #888eb0;
+  --text-secondary: #888eb0;
+  --text-muted: #dfe3fa;
 
   --border: #252945;
 
@@ -69,6 +71,7 @@
   --color-bg: var(--bg-page);
   --color-card: var(--bg-card);
   --color-sidebar: var(--bg-sidebar);
+  --color-light-btn: var(--bg-light-btn);
 
   --color-text: var(--text-primary);
   --color-text-secondary: var(--text-secondary);

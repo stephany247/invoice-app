@@ -23,12 +23,12 @@ export default function InvoiceDetail({
 
         {/* Action bar */}
         <section className="bg-card rounded-md p-6 flex items-center justify-between gap-4 mb-6">
-          <span className="text-text-secondary text-sm">Status</span>
+          <span className="text-text-secondary text-sm font-medium">Status</span>
           <StatusBadge status={invoice.status} />
         </section>
 
         {/* Card */}
-        <section className="bg-card rounded-lg p-6 md:p-8">
+        <section className="bg-card rounded-md p-6 md:p-8 font-medium">
           {/* Top */}
           <div className="flex flex-col md:flex-row justify-between gap-6 mb-8">
             <div>
@@ -86,7 +86,7 @@ export default function InvoiceDetail({
           </div>
 
           {/* Items */}
-          <div className="bg-bg rounded-lg p-4 md:p-6">
+          <div className="bg-bg rounded-md p-4 md:p-6">
             <div className="hidden md:grid grid-cols-4 text-text-muted text-sm mb-4">
               <span>Item Name</span>
               <span className="text-right">QTY.</span>
@@ -121,16 +121,16 @@ export default function InvoiceDetail({
           </div>
 
           {/* Total */}
-          <div className="bg-sidebar text-white rounded-b-lg p-6 flex justify-between items-center mt-0">
+          <div className="bg-sidebar text-white rounded-b-md p-6 flex justify-between items-center mt-0">
             <span className="text-sm">Grand Total</span>
             <span className="text-2xl font-bold">{fmt(total)}</span>
           </div>
         </section>
       </div>
-      <section className="flex gap-2 md:gap-3 justify-between bg-card p-6">
+      <section className="flex gap-3 md:gap-4 justify-end bg-card p-6 font-bold">
           <button
             onClick={() => onEdit(invoice)}
-            className="px-6 py-3 rounded-full bg-bg text-text-muted hover:opacity-80"
+            className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:opacity-80"
           >
             Edit
           </button>
