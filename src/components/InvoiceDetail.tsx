@@ -3,6 +3,7 @@ import StatusBadge from "./StatusBadge";
 import { fmt, fmtDate, calcTotal } from "../utils/utils";
 import type { Item } from "../types/types";
 import BackButton from "./BackButton";
+import Modal from "./Modal";
 
 export default function InvoiceDetail({
   invoice,
@@ -154,6 +155,14 @@ export default function InvoiceDetail({
           </button>
         )}
       </section>
+
+      <Modal
+        open={showDeleteModal}
+        title="Confirm Deletion"
+        body={`Are you sure you want to delete invoice #${invoice.id}? This action cannot be undone.`}
+        onConfirm={onDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </>
   );
 }
