@@ -4,7 +4,7 @@ import StatusBadge from "./StatusBadge";
 import FilterBar from "./FilterBar";
 import type { Invoice, Status } from "../types/types";
 import { FaPlus } from "react-icons/fa";
-import emptyIllustration from "../assets/Email campaign_Flatline.svg"
+import emptyIllustration from "../assets/Email campaign_Flatline.svg";
 
 export default function InvoiceList({ invoices, onCreate, onView }: any) {
   const [filters, setFilters] = useState<Record<Status, boolean>>({
@@ -18,13 +18,15 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
   const visible = invoices.filter((inv: Invoice) => filters[inv.status]);
 
   return (
-    <div className="p-6 md:p-10">
+    <div className="p-6 md:p-10 pb-16">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-text">Invoices</h1>
-          <p className="text-text-muted text-sm">
-            {visible.length} invoice{visible.length !== 1 && "s"}
+          <p className="text-text-secondary text-sm">
+            {visible.length === 0
+              ? "No invoices"
+              : `${visible.length} invoice${visible.length !== 1 ? "s" : ""}`}
           </p>
         </div>
 
@@ -47,11 +49,15 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
       {/* Empty State */}
       {visible.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center my-20 gap-6">
-          <img src={emptyIllustration} alt="No invoices" className="w-48 md:w-64" />
+          <img
+            src={emptyIllustration}
+            alt="No invoices"
+            className="w-48 md:w-64"
+          />
           <p className="text-text font-bold text-2xl">There is nothing here</p>
           <p className="text-sm text-text-secondary w-6/10">
-            Create an invoice by clicking the <strong>New</strong> button and get
-            started
+            Create an invoice by clicking the <strong>New</strong> button and
+            get started
           </p>
         </div>
       ) : (
@@ -74,14 +80,14 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
                   {inv.id}
                 </p>
 
-                <p className="text-text-muted text-sm md:hidden">
+                <p className="text-text-muted dark:text-text text-sm md:hidden">
                   {inv.client}
                 </p>
               </div>
 
               {/* Middle */}
               <div className="flex justify-between md:flex-1 md:items-center">
-                <p className="text-text-muted text-sm hidden">
+                <p className="text-text-muted text-sm font-medium hidden">
                   Due {fmtDate(inv.dueDate)}
                 </p>
 

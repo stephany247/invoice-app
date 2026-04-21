@@ -9,7 +9,7 @@ export default function StatusBadge({ status }: { status: Status }) {
 
   return (
     <span
-      className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium capitalize ${styles[status]}`}
+      className={`min-w-25 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium capitalize ${styles[status]}`}
     >
       <span
         className={`w-2 h-2 rounded-full ${
