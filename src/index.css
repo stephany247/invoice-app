@@ -39,6 +39,7 @@
 
   --radius-sm: 4px;
   --radius: 8px;
+  --radius-md: 20px;
   --radius-lg: 24px;
 }
 
@@ -99,6 +100,7 @@
 
   --radius-sm: var(--radius-sm);
   --radius: var(--radius);
+  --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
 
   --font-sans: "League Spartan", sans-serif;

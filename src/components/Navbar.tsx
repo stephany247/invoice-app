@@ -18,10 +18,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-sidebar flex items-center justify-between h-20">
+    <nav className="relative z-30 bg-sidebar flex items-center justify-between h-18 md:h-20">
       {/* Logo block */}
-      <div className="w-20 h-full bg-primary rounded-r-[20px] flex items-center justify-center relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-primary-light rounded-tl-[20px]" />
+      <div className="w-20 h-full bg-primary rounded-r-md flex items-center justify-center relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-primary-light rounded-tl-md" />
 
         <img src={logo} alt="Logo" className="relative z-10 w-7" />
       </div>

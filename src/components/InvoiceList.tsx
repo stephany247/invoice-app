@@ -35,13 +35,13 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
 
           <button
             onClick={onCreate}
-            className="bg-primary hover:bg-primary-light text-white px-2 py-2 rounded-full flex items-center gap-2 font-bold"
+            className="bg-primary hover:bg-primary-light text-white px-2 py-2 rounded-full flex items-center gap-2 md:gap-3 font-bold"
           >
             <span className="bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center font-bold">
               <FaPlus />
             </span>
             <span className="inline md:hidden text-base pr-2">New</span>
-            <span className="hidden md:inline">New Invoice</span>
+            <span className="hidden md:inline md:pr-2">New Invoice</span>
           </button>
         </div>
       </div>
@@ -55,7 +55,7 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
             className="w-48 md:w-64"
           />
           <p className="text-text font-bold text-2xl">There is nothing here</p>
-          <p className="text-sm text-text-secondary w-6/10">
+          <p className="text-sm text-text-secondary w-50">
             Create an invoice by clicking the <strong>New</strong> button and
             get started
           </p>
@@ -71,10 +71,10 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") onView(inv);
               }}
-              className="bg-card hover:border hover:border-primary rounded-md p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer transition"
+              className="bg-card hover:border hover:border-primary rounded-md p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 cursor-pointer transition"
             >
               {/* Left */}
-              <div className="flex justify-between md:flex-1 md:items-center">
+              <div className="flex justify-between md:items-center">
                 <p className="font-bold text-text">
                   <span className="text-text-muted">#</span>
                   {inv.id}
@@ -85,12 +85,12 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
                 </p>
               </div>
 
-              {/* Middle */}
-              <div className="flex justify-between md:flex-1 md:items-center">
-                <p className="text-text-muted text-sm font-medium hidden">
-                  Due {fmtDate(inv.dueDate)}
-                </p>
+              <p className="text-text-muted text-sm font-medium hidden md:block">
+                Due {fmtDate(inv.dueDate)}
+              </p>
 
+              {/* Middle */}
+              <div className="flex justify-between md:items-center">
                 <p className="hidden md:block text-text-muted">{inv.client}</p>
               </div>
 

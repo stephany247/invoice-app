@@ -13,14 +13,16 @@ export const fmtDate = (d: string | Date): string =>
     day: "2-digit",
   });
 
-export const today = (): string =>
-  new Date().toISOString().split("T")[0];
-
+export const today = (): string => new Date().toISOString().split("T")[0];
 
 export const calcTotal = (items: Item[]): number =>
   items.reduce(
-    (sum, item) =>
-      sum +
-      Number(item.quantity || 0) * Number(item.price || 0),
-    0
+    (sum, item) => sum + Number(item.quantity || 0) * Number(item.price || 0),
+    0,
   );
+
+export const fmtNumber = (n: number) =>
+  new Intl.NumberFormat("en-GB", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(n);

@@ -6,6 +6,9 @@ type Props = {
   type?: string;
   placeholder?: string;
   error?: string;
+  className?: string;
+  hideLabel?: boolean;
+  compact?: boolean
 };
 
 export default function InputField({
@@ -16,11 +19,19 @@ export default function InputField({
   type = "text",
   placeholder,
   error,
+  className,
+  hideLabel,
+  compact
 }: Props) {
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className={`flex flex-col gap-1 w-full ${className}`}>
       <div className="flex justify-between items-center">
-        <label htmlFor={id} className="text-sm text-text-muted font-medium">
+        <label
+          htmlFor={id}
+          className={`text-sm text-text-muted font-medium ${
+            hideLabel ? "md:sr-only" : ""
+          }`}
+        >
           {label}
         </label>
         {error && <span className="text-danger text-xs">{error}</span>}
@@ -32,7 +43,7 @@ export default function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`px-4 py-2 rounded-sm border w-full outline-none transition dark:bg-card
+        className={` ${compact ? "p-2 text-center" : "py-2 px-4"} rounded-sm border w-full outline-none transition dark:bg-light-btn
           ${
             error ? "border-danger" : "border-input-border focus:border-primary"
           }

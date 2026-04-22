@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInvoiceStore } from "./store/invoiceStore";
 import type { Invoice } from "./types/types";
 import Navbar from "./components/Navbar";
@@ -47,11 +47,23 @@ function App() {
     setEditingInvoice(null);
   };
 
+  useEffect(() => {
+    if (isFormOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFormOpen]);
+
   return (
     <>
       <Navbar />
       <main>
-        {!isFormOpen && selectedInvoice && (
+        {selectedInvoice && (
           <InvoiceDetail
             invoice={selectedInvoice}
             onBack={handleBack}
@@ -60,21 +72,22 @@ function App() {
             onMarkPaid={markAsPaid}
           />
         )}
-        {!isFormOpen && !selectedInvoice && (
+        {!selectedInvoice && (
           <InvoiceList
             invoices={invoices}
             onCreate={handleCreate}
             onView={handleView}
           />
         )}
-        {isFormOpen && (
-          <InvoiceForm
-            onBack={handleCloseForm}
-            initial={editingInvoice ?? undefined}
-            onSave={handleSave}
-            onCancel={handleCloseForm}
-          />
-        )}
+        {/* {isFormOpen && ( */}
+        <InvoiceForm
+          open={isFormOpen}
+          onBack={handleCloseForm}
+          initial={editingInvoice ?? undefined}
+          onSave={handleSave}
+          onCancel={handleCloseForm}
+        />
+        {/* )} */}
       </main>
     </>
   );

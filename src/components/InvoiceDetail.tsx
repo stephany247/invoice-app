@@ -23,8 +23,34 @@ export default function InvoiceDetail({
 
         {/* Action bar */}
         <section className="bg-card rounded-md p-6 flex items-center justify-between gap-4 mb-6">
-          <span className="text-text-secondary text-sm font-medium">Status</span>
-          <StatusBadge status={invoice.status} />
+          <div className="flex justify-between items-center gap-5 w-full md:w-auto">
+            <p className="text-text-secondary text-sm font-medium">Status</p>
+            <StatusBadge status={invoice.status} />
+          </div>
+          <div className="hidden md:flex gap-2 lg:gap-4 justify-end bg-card font-bold">
+            <button
+              onClick={() => onEdit(invoice)}
+              className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:opacity-80"
+            >
+              Edit
+            </button>
+
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="px-6 py-3 rounded-full bg-danger text-white hover:bg-danger-hover"
+            >
+              Delete
+            </button>
+
+            {invoice.status !== "paid" && (
+              <button
+                onClick={() => onMarkPaid(invoice.id)}
+                className="px-6 py-3 rounded-full bg-primary text-white hover:bg-primary-light"
+              >
+                {invoice.status === "draft" ? "Send" : "Mark as Paid"}
+              </button>
+            )}
+          </div>
         </section>
 
         {/* Card */}
@@ -103,10 +129,14 @@ export default function InvoiceDetail({
                   <div className="flex flex-col gap-1">
                     <p className="font-bold text-text">{item.name}</p>
 
-                    <p className="text-text-secondary font-bold">
+                    <p className="text-text-secondary font-bold md:hidden">
                       {item.quantity} x {fmt(item.price)}
                     </p>
                   </div>
+
+                  <p className="text-text-muted font-bold hidden md:block text-right">
+                    {item.quantity}
+                  </p>
 
                   <p className="hidden md:block text-right text-text-muted">
                     {fmt(item.price)}
@@ -127,13 +157,13 @@ export default function InvoiceDetail({
           </div>
         </section>
       </div>
-      <section className="flex gap-3 md:gap-4 justify-end bg-card p-6 font-bold">
-          <button
-            onClick={() => onEdit(invoice)}
-            className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:opacity-80"
-          >
-            Edit
-          </button>
+      <section className="flex gap-3 md:gap-4 justify-end bg-card p-6 font-bold md:hidden">
+        <button
+          onClick={() => onEdit(invoice)}
+          className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:opacity-80"
+        >
+          Edit
+        </button>
 
         <button
           onClick={() => setShowDeleteModal(true)}

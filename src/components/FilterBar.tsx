@@ -33,8 +33,10 @@ export default function FilterBar({
         aria-expanded={open ? "true" : "false"}
         className="flex items-center gap-2 font-bold text-text hover:text-primary"
       >
-        Filter
-        <span className="hidden md:inline">by status</span>
+        <p>
+          <span>Filter</span>
+          <span className="hidden md:inline"> by status</span>
+        </p>
         <ChevronDown
           className={`size-4 text-primary transition-transform ${
             open ? "rotate-180" : ""
