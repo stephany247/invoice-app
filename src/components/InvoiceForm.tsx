@@ -112,10 +112,11 @@ export default function InvoiceForm({
       />
       {/* drawer */}
       <div
-        className={`absolute top-18 md:top-20 left-0 bottom-0 bg-card overflow-y-auto w-full md:w-150 transition-transform duration-300 ease-in-out md:rounded-r-md ${open ? "block translate-x-0" : "hidden md:block md:-translate-x-full"} pointer-events-auto
+        className={`absolute top-18 md:top-20 lg:top-0 left-0 bottom-0 bg-card overflow-y-auto w-full md:w-150 md:max-w-3xl lg:max-w-5xl 2xl:max-w-7xl
+           transition-transform duration-300 ease-in-out md:rounded-r-md ${open ? "block translate-x-0" : "hidden md:block md:-translate-x-full"} pointer-events-auto
   `}
       >
-        <section className="p-6 md:p-12 space-y-8 md:space-y-12">
+        <section className="p-6 md:p-12 lg:ml-28 space-y-8 md:space-y-12">
           <div className="md:hidden">
             <BackButton onClick={onBack} />
           </div>
@@ -386,7 +387,7 @@ export default function InvoiceForm({
           </fieldset>
         </section>
         {/* Footer */}
-        <section className="flex gap-2 md:gap-3 justify-end bg-light-btn p-4 font-bold text-nowrap shadow-2xl">
+        <section className="md:sticky bottom-0 left-0 w-full flex gap-2 md:gap-3 justify-end bg-light-btn p-4 font-bold text-nowrap shadow-[0_-8px_20px_rgba(0,0,0,0.15)] lg:rounded-md">
           <button
             className="px-6 py-3 rounded-full bg-light-btn text-text-muted md:justify-start"
             onClick={onCancel}

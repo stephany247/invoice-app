@@ -17,7 +17,7 @@ export default function InvoiceDetail({
 
   return (
     <>
-      <div className="p-6 md:p-10 max-w-4xl mx-auto">
+      <div className="p-6 md:p-10 pt-28 md:pt-36 pb-16 lg:pt-16 max-w-3xl 2xl:max-w-4xl mx-auto">
         {/* Back */}
         <BackButton onClick={onBack} />
 
@@ -112,7 +112,7 @@ export default function InvoiceDetail({
           </div>
 
           {/* Items */}
-          <div className="bg-bg rounded-md p-4 md:p-6">
+          <div className="bg-bg rounded-t-md p-4 md:p-6">
             <div className="hidden md:grid grid-cols-4 text-text-muted text-sm mb-4">
               <span>Item Name</span>
               <span className="text-right">QTY.</span>

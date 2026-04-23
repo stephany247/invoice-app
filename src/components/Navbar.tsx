@@ -18,20 +18,20 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="relative z-30 bg-sidebar flex items-center justify-between h-18 md:h-20">
+    <nav className="fixed lg:left-0 z-30 bg-sidebar flex lg:flex-col items-center justify-between w-full lg:w-28 h-18 md:h-20 lg:h-full lg:rounded-r-lg">
       {/* Logo block */}
-      <div className="w-20 h-full bg-primary rounded-r-md flex items-center justify-center relative overflow-hidden">
+      <div className="w-20 h-full lg:w-full lg:h-30 bg-primary rounded-r-md flex items-center justify-center relative overflow-hidden">
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-primary-light rounded-tl-md" />
 
         <img src={logo} alt="Logo" className="relative z-10 w-7" />
       </div>
 
       {/* Right side */}
-      <div className="flex items-center h-full">
+      <div className="flex lg:flex-col items-center h-full lg:h-fit lg:mt-auto">
         {/* Theme button */}
         <button
           onClick={toggleTheme}
-          className="h-full px-2 flex items-center justify-center w-16 hover:opacity-80 transition"
+          className="h-full px-2 lg:py-3 flex items-center justify-center w-16 lg:h-16 cursor-pointer hover:opacity-80 transition"
         >
           {theme === "light" ? (
             <IoIosMoon className="text-primary-light size-7" />
@@ -41,10 +41,11 @@ export default function Navbar() {
         </button>
 
         {/* Divider */}
-        <div className="h-full w-px bg-[#494E6E]" />
+        <div className="h-full w-px bg-[#494E6E] lg:hidden" />
+        <div className="hidden w-full h-px bg-[#494E6E] lg:block" />
 
         {/* Avatar */}
-        <button className="h-full px-5 flex items-center justify-center w-20">
+        <button className="h-full px-5 lg:py-5 flex items-center justify-center w-20 lg:h-20">
           <img src={avatarImg} alt="User" className="w-full h-auto rounded-full" />
         </button>
       </div>

@@ -18,7 +18,7 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
   const visible = invoices.filter((inv: Invoice) => filters[inv.status]);
 
   return (
-    <div className="p-6 md:p-10 pb-16">
+    <div className="p-6 pt-28 md:p-10 md:pt-36 pb-16 lg:pt-16 max-w-3xl 2xl:max-w-4xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
