@@ -35,7 +35,7 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
 
           <button
             onClick={onCreate}
-            className="bg-primary hover:bg-primary-light text-white px-2 py-2 rounded-full flex items-center gap-2 md:gap-3 font-bold"
+            className="bg-primary hover:bg-primary-light text-white px-2 py-2 rounded-full flex items-center gap-2 md:gap-3 font-bold cursor-pointer"
           >
             <span className="bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center font-bold">
               <FaPlus />
@@ -71,7 +71,7 @@ export default function InvoiceList({ invoices, onCreate, onView }: any) {
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") onView(inv);
               }}
-              className="bg-card hover:border hover:border-primary rounded-md p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 cursor-pointer transition"
+              className="bg-card border border-transparent hover:border-primary rounded-md p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 cursor-pointer transition"
             >
               {/* Left */}
               <div className="flex justify-between md:items-center">

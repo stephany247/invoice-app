@@ -30,14 +30,14 @@ export default function InvoiceDetail({
           <div className="hidden md:flex gap-2 lg:gap-4 justify-end bg-card font-bold">
             <button
               onClick={() => onEdit(invoice)}
-              className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:opacity-80"
+              className="px-6 py-3 rounded-full bg-light-btn text-text-muted hover:bg-text-muted/20 transition-colors duration-300 ease-in-out cursor-pointer"
             >
               Edit
             </button>
 
             <button
               onClick={() => setShowDeleteModal(true)}
-              className="px-6 py-3 rounded-full bg-danger text-white hover:bg-danger-hover"
+              className="px-6 py-3 rounded-full bg-danger text-white hover:bg-danger-hover transition-colors duration-300 ease-in-out cursor-pointer"
             >
               Delete
             </button>
@@ -45,7 +45,7 @@ export default function InvoiceDetail({
             {invoice.status !== "paid" && (
               <button
                 onClick={() => onMarkPaid(invoice.id)}
-                className="px-6 py-3 rounded-full bg-primary text-white hover:bg-primary-light"
+                className="px-6 py-3 rounded-full bg-primary text-white hover:bg-primary-light transition-colors duration-300 ease-in-out cursor-pointer"
               >
                 {invoice.status === "draft" ? "Send" : "Mark as Paid"}
               </button>

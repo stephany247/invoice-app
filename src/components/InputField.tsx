@@ -8,7 +8,7 @@ type Props = {
   error?: string;
   className?: string;
   hideLabel?: boolean;
-  compact?: boolean
+  compact?: boolean;
 };
 
 export default function InputField({
@@ -21,16 +21,16 @@ export default function InputField({
   error,
   className,
   hideLabel,
-  compact
+  compact,
 }: Props) {
   return (
     <div className={`flex flex-col gap-1 w-full ${className}`}>
       <div className="flex justify-between items-center">
         <label
           htmlFor={id}
-          className={`text-sm text-text-muted font-medium ${
+          className={`text-sm font-medium ${
             hideLabel ? "md:sr-only" : ""
-          }`}
+          } ${error ? "text-danger" : "text-text-muted"}`}
         >
           {label}
         </label>

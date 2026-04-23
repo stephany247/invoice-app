@@ -29,6 +29,7 @@ export default function FilterBar({
     <div className="relative" ref={ref}>
       {/* Trigger */}
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open ? "true" : "false"}
         className="flex items-center gap-2 font-bold text-text hover:text-primary"

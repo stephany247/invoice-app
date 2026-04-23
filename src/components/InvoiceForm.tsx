@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fmt, fmtNumber, today } from "../utils/utils";
+import { fmtNumber, today } from "../utils/utils";
 import type { Invoice, Item, Status } from "../types/types";
 import BackButton from "./BackButton";
 import InputField from "./InputField";
@@ -55,6 +55,7 @@ export default function InvoiceForm({
         }
       : blankForm(),
   );
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (initial) {
@@ -79,6 +80,11 @@ export default function InvoiceForm({
     const items = [...form.items];
     items[i] = { ...items[i], [key]: value };
     setForm({ ...form, items });
+
+    setErrors((e) => ({
+      ...e,
+      [`item-${key}-${i}`]: "",
+    }));
   };
 
   const addItem = () => {
@@ -94,8 +100,43 @@ export default function InvoiceForm({
       items: f.items.filter((_, idx) => idx !== i),
     }));
   };
+  const validate = () => {
+    const e: Record<string, string> = {};
+
+    // Bill From
+    if (!form.fromAddress) e.fromAddress = "Required";
+    if (!form.fromCity) e.fromCity = "Required";
+    if (!form.fromPostCode) e.fromPostCode = "Required";
+    if (!form.fromCountry) e.fromCountry = "Required";
+
+    // Bill To
+    if (!form.client) e.client = "Required";
+    if (!form.email) e.email = "Required";
+    if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Invalid email";
+    if (!form.address) e.address = "Required";
+    if (!form.city) e.city = "Required";
+    if (!form.postCode) e.postCode = "Required";
+    if (!form.country) e.country = "Required";
+
+    // Dates / description
+    if (!form.createdAt) e.createdAt = "Required";
+    if (!form.paymentTerms) e.paymentTerms = "Required";
+    if (!form.description) e.description = "Required";
+
+    // Items
+    form.items.forEach((item, i) => {
+      if (!item.name) e[`item-name-${i}`] = "Required";
+      if (!item.quantity || item.quantity <= 0) e[`item-qty-${i}`] = "Invalid";
+      if (!item.price || item.price <= 0) e[`item-price-${i}`] = "Invalid";
+    });
+
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
   const submit = (status: Status) => {
+    if (!validate()) return;
+
     onSave({
       ...(form as Invoice),
       id: initial?.id || Math.random().toString(36).slice(2, 8).toUpperCase(),
@@ -142,6 +183,7 @@ export default function InvoiceForm({
                 label="Street Address"
                 value={form.fromAddress}
                 onChange={(e) => setField("fromAddress", e.target.value)}
+                error={errors.fromAddress}
               />
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -150,6 +192,7 @@ export default function InvoiceForm({
                   label="City"
                   value={form.fromCity}
                   onChange={(e) => setField("fromCity", e.target.value)}
+                  error={errors.fromCity}
                 />
 
                 <InputField
@@ -157,6 +200,7 @@ export default function InvoiceForm({
                   label="Post Code"
                   value={form.fromPostCode}
                   onChange={(e) => setField("fromPostCode", e.target.value)}
+                  error={errors.fromPostCode}
                 />
                 <InputField
                   id="fromCountry"
@@ -164,6 +208,7 @@ export default function InvoiceForm({
                   value={form.fromCountry}
                   onChange={(e) => setField("fromCountry", e.target.value)}
                   className="col-span-2 md:col-span-1"
+                  error={errors.fromCountry}
                 />
               </div>
             </div>
@@ -179,6 +224,7 @@ export default function InvoiceForm({
                 label="Client's Name"
                 value={form.client}
                 onChange={(e) => setField("client", e.target.value)}
+                error={errors.client}
               />
 
               <InputField
@@ -187,6 +233,7 @@ export default function InvoiceForm({
                 type="email"
                 value={form.email}
                 onChange={(e) => setField("email", e.target.value)}
+                error={errors.email}
               />
 
               <InputField
@@ -194,6 +241,7 @@ export default function InvoiceForm({
                 label="Street Address"
                 value={form.address}
                 onChange={(e) => setField("address", e.target.value)}
+                error={errors.address}
               />
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -202,6 +250,7 @@ export default function InvoiceForm({
                   label="City"
                   value={form.city}
                   onChange={(e) => setField("city", e.target.value)}
+                  error={errors.city}
                 />
 
                 <InputField
@@ -209,6 +258,7 @@ export default function InvoiceForm({
                   label="Post Code"
                   value={form.postCode}
                   onChange={(e) => setField("postCode", e.target.value)}
+                  error={errors.postCode}
                 />
                 <InputField
                   id="country"
@@ -216,6 +266,7 @@ export default function InvoiceForm({
                   value={form.country}
                   onChange={(e) => setField("country", e.target.value)}
                   className="col-span-2 md:col-span-1"
+                  error={errors.country}
                 />
               </div>
             </div>
@@ -229,6 +280,7 @@ export default function InvoiceForm({
               type="date"
               value={form.createdAt}
               onChange={(e) => setField("createdAt", e.target.value)}
+              error={errors.createdAt}
             />
 
             <div className="flex flex-col gap-1">
@@ -262,6 +314,7 @@ export default function InvoiceForm({
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
               className="md:col-span-2"
+              error={errors.description}
             />
           </fieldset>
 
@@ -291,6 +344,7 @@ export default function InvoiceForm({
                   value={item.name}
                   onChange={(e) => setItemField(i, "name", e.target.value)}
                   hideLabel
+                  error={errors[`item-name-${i}`]}
                 />
                 <InputField
                   id={`item-qty-${i}`}
@@ -301,6 +355,7 @@ export default function InvoiceForm({
                     setItemField(i, "quantity", Number(e.target.value))
                   }
                   hideLabel
+                  error={errors[`item-qty-${i}`]}
                 />
                 <InputField
                   id={`item-price-${i}`}
@@ -311,6 +366,7 @@ export default function InvoiceForm({
                     setItemField(i, "price", Number(e.target.value))
                   }
                   hideLabel
+                  error={errors[`item-price-${i}`]}
                 />
                 <p className="font-bold text-text-muted text-sm">
                   {fmtNumber(item.quantity * item.price)}
@@ -318,7 +374,7 @@ export default function InvoiceForm({
                 <button
                   type="button"
                   onClick={() => removeItem(i)}
-                  className="text-text-muted hover:text-danger transition"
+                  className="text-text-muted hover:text-danger transition cursor-pointer"
                   aria-label={`Remove item ${i + 1}`}
                 >
                   <FaTrash />
@@ -389,7 +445,7 @@ export default function InvoiceForm({
         {/* Footer */}
         <section className="md:sticky bottom-0 left-0 w-full flex gap-2 md:gap-3 justify-end bg-light-btn p-4 font-bold text-nowrap shadow-[0_-8px_20px_rgba(0,0,0,0.15)] lg:rounded-md">
           <button
-            className="px-6 py-3 rounded-full bg-light-btn text-text-muted md:justify-start"
+            className="px-6 py-3 rounded-full bg-light-btn text-text-muted md:justify-start hover:bg-light-btn/80 cursor-pointer"
             onClick={onCancel}
           >
             {initial ? "Cancel" : "Discard"}
@@ -397,7 +453,7 @@ export default function InvoiceForm({
           {!initial && (
             <button
               onClick={() => submit("draft")}
-              className="px-4 py-2 bg-[#373B53] text-text-secondary dark:text-text-muted rounded-full"
+              className="px-4 py-2 bg-[#373B53] text-text-secondary dark:text-text-muted rounded-full  hover:bg-[#373B53]/80 cursor-pointer"
             >
               Save Draft
             </button>
@@ -405,7 +461,7 @@ export default function InvoiceForm({
 
           <button
             onClick={() => submit("pending")}
-            className="px-4 py-2 bg-primary text-white rounded-full"
+            className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/80 cursor-pointer"
           >
             {initial ? "Save Changes" : "Save & Send"}
           </button>
